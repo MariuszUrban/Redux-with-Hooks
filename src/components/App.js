@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { createStore } from "redux";
-
+import { useDispatch } from "react-redux";
+import { fetchTodos } from "../actions";
 import Header from "./Header";
-import ConnectedAddTodo from "../containers/ConnectedAddTodo";
-import ConnectedTodoList from "../containers/ConnectedTodoList";
-import ConnectedTodoFilter from "../containers/ConnectedTodoFilter";
+import AddTodo from "../components/AddTodo";
+import TodoList from "../components/TodoList";
+import TodoFilter from "../components/TodoFilter";
 import StateContext from "../StateContext";
 
 import { fetchAPITodos } from "../api";
@@ -15,6 +16,7 @@ const store = createStore(appReducer, initialState);
 const { dispatch } = store;
 
 export default function App() {
+  const dispatch = useDispatch();
   const [state, setState] = useState(initialState);
 
   useEffect(() => {
@@ -25,8 +27,8 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    fetchAPITodos().then((todos) => dispatch({ type: "FETCH_TODOS", todos }));
-  }, []);
+    dispatch(fetchTodos());
+  }, [dispatch]);
 
   function addTodo(title) {
     dispatch({ type: "ADD_TODO", title });
@@ -48,11 +50,11 @@ export default function App() {
     <StateContext.Provider>
       <div style={{ width: 400 }}>
         <Header />
-        <ConnectedAddTodo />
+        <AddTodo />
         <hr />
-        <ConnectedTodoList />
+        <TodoList />
         <hr />
-        <ConnectedTodoFilter />
+        <TodoFilter />
       </div>
     </StateContext.Provider>
   );
