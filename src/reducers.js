@@ -1,51 +1,48 @@
-import { generateID } from './api'
-import {combineReducers} from 'redux'
+import { combineReducers } from "redux";
 
+import { generateID } from "./api";
 
-function filter (state, action) {
-  if (action.type === 'FILTER_TODOS') {
-    return action.filter
+function filter(state = "all", action) {
+  if (action.type === "FILTER_TODOS") {
+    return action.filter;
   } else {
-    return state
+    return state;
   }
 }
 
-function todos (state, action) {
+function todos(state = [], action) {
   switch (action.type) {
-    case 'FETCH_TODOS':
-      return action.todos
+    case "FETCH_TODOS":
+      return action.todos;
 
-    case 'ADD_TODO':
+    case "ADD_TODO":
       const newTodo = {
         id: generateID(),
         title: action.title,
-        completed: false
-      }
-      return [ newTodo, ...state ]
+        completed: false,
+      };
+      return [newTodo, ...state];
 
-    case 'TOGGLE_TODO':
-      return state.map(t => {
+    case "TOGGLE_TODO":
+      return state.map((t) => {
         if (t.id === action.id) {
-          return { ...t, completed: !t.completed }
+          return { ...t, completed: !t.completed };
         }
-        return t
-      }, [])
+        return t;
+      }, []);
 
-    case 'REMOVE_TODO':
-      return state.filter(t => {
+    case "REMOVE_TODO":
+      return state.filter((t) => {
         if (t.id === action.id) {
-          return false
+          return false;
         }
-        return true
-      })
+        return true;
+      });
 
     default:
-      return state
+      return state;
   }
 }
 
-const appReducer = combineReducers({
-  todos, filter
-})
-
-export default appReducer; 
+const appReducer = combineReducers({ todos, filter });
+export default appReducer;

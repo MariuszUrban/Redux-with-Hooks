@@ -6,7 +6,8 @@ export const generateID = () => {
 export const fetchAPITodos = () =>
   new Promise((resolve) =>
     setTimeout(() => resolve([
-      { id: generateID(), title: 'Write React Hooks book', completed: true },
-      { id: generateID(), title: 'Promote book', completed: false }
+      { id: generateID(), title: 'Do some groceries', completed: true },
+      { id: generateID(), title: 'Read a  cookbook', completed: false },
+      { id: generateID(), title: 'Prepare some romantic dinner', completed: false }
     ]), 100)
   )
